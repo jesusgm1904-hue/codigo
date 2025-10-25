@@ -125,3 +125,24 @@ footer {
     max-width: 350px;
   }
 }
+.chart-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #1a1a1a;
+}
+
+.chart-section h2 {
+  color: #00b0ff;
+  margin-bottom: 10px;
+}
+
+.chart-section p {
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+canvas {
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
+}
