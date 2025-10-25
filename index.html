@@ -1,230 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mantenimiento y Gerencia FA</title>
-<style>
-  body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background-color: #121212;
-    color: #f1f1f1;
-  }
-  header {
-    background-color: #1f1f1f;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.5em;
-    color: #00b0ff;
-  }
-  .container {
-    max-width: 800px;
-    margin: 30px auto;
-    background: #1e1e1e;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  input, select, button, textarea {
-    width: 100%;
-    margin-top: 8px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background: #2b2b2b;
-    color: #fff;
-  }
-  button {
-    background-color: #00b0ff;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  button:hover {
-    background-color: #0093cc;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  th, td {
-    border: 1px solid #333;
-    padding: 10px;
-    text-align: left;
-  }
-  th {
-    background-color: #2b2b2b;
-  }
-  .hidden { display: none; }
-  .role-btns button {
-    width: 30%;
-    margin: 5px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ingeniería IMA en segundos</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Sección principal -->
+  <header class="hero">
+    <h1>Ingeniería IMA en segundos</h1>
+  </header>
 
-<header>Mantenimiento y Gerencia FA</header>
+  <!-- Sección 1 -->
+  <section class="info fade-in">
+    <div class="text">
+      <h2>¿Qué es Ingeniería IMA?</h2>
+      <p>
+        La Ingeniería en Manufactura Avanzada es una disciplina
+        que combina conocimientos de ingeniería, tecnología y gestión 
+        para optimizar los procesos de producción mediante 
+        el uso de herramientas y metodologías innovadoras.
+        Su objetivo principal es mejorar la competitividad de las empresas
+        manufactureras al incrementar la eficiencia, calidad, flexibilidad
+        y capacidad de respuesta a las demandas del mercado.
 
-<div class="container" id="login-section">
-  <h2>Ingresar</h2>
-  <input type="text" id="nombre" placeholder="Ingresa tu nombre">
-  <div class="role-btns">
-    <button onclick="setRole('Gerente')">Gerente</button>
-    <button onclick="setRole('Trabajador')">Trabajador</button>
-    <button onclick="setRole('Mantenimiento')">Mantenimiento</button>
-  </div>
-</div>
 
-<div class="container hidden" id="panel-section">
-  <h2 id="panel-title"></h2>
-  <div id="panel-content"></div>
-  <button onclick="cerrarSesion()">Cerrar sesión</button>
-</div>
+      </p>
+    </div>
+    <img src="imagen1.jpg" alt="Estudiantes de IMA trabajando en laboratorio">
+  </section>
 
-<script>
-let usuario = JSON.parse(localStorage.getItem("usuario")) || null;
-let solicitudes = JSON.parse(localStorage.getItem("solicitudes")) || [];
+  <!-- Sección 2 -->
+  <section class="info reverse fade-in">
+    <img src="imagen2.jpg" alt="Robot construido por estudiantes">
+    <div class="text">
+      <h2>Aplicaciones de la carrera</h2>
+      <p>
+       La Ingeniería en Manufactura Avanzada es una disciplina 
+       enfocada en diseñar, optimizar y automatizar procesos de 
+       producción mediante el uso de tecnologías modernas como 
+       robótica, impresión 3D, simulación digital e 
+       inteligencia artificial.
+        Su aplicación abarca industrias como la automotriz, 
+        aeroespacial, electrónica y médica, donde se busca 
+        mejorar la eficiencia, reducir costos y elevar la calidad.
+        Los profesionales en esta área combinan conocimientos 
+        técnicos y de gestión para liderar proyectos de innovación, 
+        implementar sistemas inteligentes y transformar la manera 
+        en que se fabrican productos.
 
-function guardarDatos() {
-  localStorage.setItem("solicitudes", JSON.stringify(solicitudes));
-}
+      </p>
+    </div>
+  </section>
 
-function mostrarPanel() {
-  document.getElementById("login-section").classList.add("hidden");
-  document.getElementById("panel-section").classList.remove("hidden");
-  document.getElementById("panel-title").innerText = `Panel de ${usuario.rol}`;
-  const panel = document.getElementById("panel-content");
-  panel.innerHTML = "";
+  <!-- Sección de Podcast -->
+  <section class="podcast fade-in">
+    <h2>🎧 Escucha nuestro podcast</h2>
+    <audio controls>
+      <source src="podcast.mp3" type="audio/mpeg">
+      Tu navegador no soporta la reproducción de audio.
+    </audio>
+  </section>
 
-  if (usuario.rol === "Trabajador") {
-    panel.innerHTML = `
-      <h3>Enviar Solicitud</h3>
-      <select id="tipoSolicitud">
-        <option value="Cambio de turno">Cambio de turno</option>
-        <option value="Mantenimiento">Mantenimiento</option>
-      </select>
-      <div id="formularioExtra"></div>
-      <button onclick="enviarSolicitud()">Enviar Solicitud</button>
-    `;
+  <footer>
+    <p>© 2025 Ingeniería IMA en segundos</p>
+  </footer>
 
-    const select = document.getElementById("tipoSolicitud");
-    select.addEventListener("change", mostrarFormularioExtra);
-    mostrarFormularioExtra();
-  }
-
-  if (usuario.rol === "Gerente") {
-    panel.innerHTML = `<h3>Solicitudes de cambio de turno</h3>`;
-    mostrarTabla("Cambio de turno");
-  }
-
-  if (usuario.rol === "Mantenimiento") {
-    panel.innerHTML = `<h3>Reportes de mantenimiento</h3>`;
-    mostrarTabla("Mantenimiento");
-  }
-}
-
-function mostrarFormularioExtra() {
-  const tipo = document.getElementById("tipoSolicitud").value;
-  const div = document.getElementById("formularioExtra");
-  if (tipo === "Cambio de turno") {
-    div.innerHTML = `
-      <input type="date" id="diaCambio">
-      <input type="text" id="horario" placeholder="Horario solicitado (ej. 9am - 5pm)">
-    `;
-  } else {
-    div.innerHTML = `
-      <input type="text" id="area" placeholder="Área de mantenimiento">
-      <input type="text" id="maquina" placeholder="Máquina">
-      <input type="time" id="horaReporte">
-    `;
-  }
-}
-
-function enviarSolicitud() {
-  const tipo = document.getElementById("tipoSolicitud").value;
-  let nueva = {
-    id: Date.now(),
-    tipo,
-    nombre: usuario.nombre,
-    estado: "Pendiente",
-    respuesta: "",
-  };
-
-  if (tipo === "Cambio de turno") {
-    nueva.dia = document.getElementById("diaCambio").value;
-    nueva.horario = document.getElementById("horario").value;
-  } else {
-    nueva.area = document.getElementById("area").value;
-    nueva.maquina = document.getElementById("maquina").value;
-    nueva.hora = document.getElementById("horaReporte").value;
-  }
-
-  solicitudes.push(nueva);
-  guardarDatos();
-  alert("Solicitud enviada correctamente ✅");
-}
-
-function mostrarTabla(tipo) {
-  const panel = document.getElementById("panel-content");
-  const lista = solicitudes.filter(s => s.tipo === tipo);
-  if (lista.length === 0) {
-    panel.innerHTML += "<p>No hay solicitudes aún.</p>";
-    return;
-  }
-  let tabla = `<table><tr><th>Nombre</th><th>Detalles</th><th>Estado</th><th>Acción</th></tr>`;
-  lista.forEach(s => {
-    let detalles = "";
-    if (s.tipo === "Cambio de turno")
-      detalles = `Día: ${s.dia}<br>Horario: ${s.horario}`;
-    else
-      detalles = `Área: ${s.area}<br>Máquina: ${s.maquina}<br>Hora: ${s.hora}`;
-
-    let acciones = "";
-    if (usuario.rol === "Gerente") {
-      acciones = `
-        <button onclick="responder(${s.id}, 'Autorizado')">Autorizar</button>
-        <button onclick="responder(${s.id}, 'Rechazado')">Rechazar</button>
-      `;
-    } else if (usuario.rol === "Mantenimiento") {
-      acciones = `
-        <button onclick="responder(${s.id}, 'En reparación')">En reparación</button>
-        <button onclick="responder(${s.id}, 'Atendido')">Atendido</button>
-      `;
-    }
-
-    tabla += `<tr>
-      <td>${s.nombre}</td>
-      <td>${detalles}</td>
-      <td>${s.estado}</td>
-      <td>${acciones}</td>
-    </tr>`;
-  });
-  tabla += `</table>`;
-  panel.innerHTML += tabla;
-}
-
-function responder(id, estado) {
-  solicitudes = solicitudes.map(s => s.id === id ? {...s, estado} : s);
-  guardarDatos();
-  mostrarPanel();
-}
-
-function setRole(rol) {
-  const nombre = document.getElementById("nombre").value.trim();
-  if (!nombre) return alert("Por favor, ingresa tu nombre");
-  usuario = { nombre, rol };
-  localStorage.setItem("usuario", JSON.stringify(usuario));
-  mostrarPanel();
-}
-
-function cerrarSesion() {
-  localStorage.removeItem("usuario");
-  location.reload();
-}
-
-if (usuario) mostrarPanel();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
